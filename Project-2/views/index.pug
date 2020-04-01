@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div(class="row")
+    div(class="col-lg-6")
+      h1 Upload Image
+      if msg
+        label= msg
+      form(action="/uploadImage" method="post" enctype="multipart/form-data")
+        h3 Choose File
+        input(type="file" class="" id="customFile" name="targetImage") 
+        br
+        button(class="btn btn-primary mt-2")  Upload
+      br
+      if file
+        img(src=file class="img-fluid")
