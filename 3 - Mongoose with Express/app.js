@@ -1,23 +1,13 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const bodyParser = require('body-parser')
-const multer = require('multer');
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var app = express();
-
-// setup middleware
-app.use(bodyParser.json()); // Support for json encoded body 
-app.use(bodyParser.urlencoded({extended:true})); // Support for encoded body
-
-// setup bootstrap with virtual static
-app.use("/bs", express.static(path.join(__dirname, '/node_modules/bootstrap/dist/')));
-// Setup Jquery
-app.use("/jq", express.static(path.join(__dirname, '/node_modules/jquery/dist/')));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,8 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'model')));
+app.use('/bs', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/')))
 
 app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,7 +39,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// Extra Route
 
 module.exports = app;
