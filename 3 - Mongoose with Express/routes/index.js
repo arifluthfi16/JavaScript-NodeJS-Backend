@@ -3,11 +3,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../model/user.model');
 
-var agus = new User({
-  username : "agos",
-  email    : "bagus@mail.com"
-})
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
