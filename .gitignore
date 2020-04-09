@@ -43,6 +43,7 @@ node_modules/
 2 - Uploading Image with Filters/node_modules/
 3 - Mongoose with Express/node_modules/
 4 - Express with Redis Caching/node_modules/
+5 - Mongoose with Express and Redis Caching/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
