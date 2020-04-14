@@ -3,9 +3,18 @@
     <head>
         <meta charset="utf-8">
         <title>WebScockets 101</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
         <link href="/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <h1>Woo, you see me!</h1>
+        <div id="mario-chat">
+          <div id="chat-window">
+            <div id="output"></div>
+          </div>
+          <input type="text" placeholder="Handle" id="handle">
+          <input type="text" placeholder="Message" id="message">
+          <button id="send">Send</button>
+        </div>
+        <script src="/chat.js"></script>
     </body>
 </html>

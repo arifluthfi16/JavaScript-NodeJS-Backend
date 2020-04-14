@@ -1,4 +1,5 @@
 const express = require('express');
+const socket = require('socket.io');
 
 // App Setup
 
@@ -13,4 +14,13 @@ app.use(express.static('public'))
 
 app.get('/', function(req,res){
   res.render('index.html')
+})
+
+// Socket Setup IN THE BACKEND
+
+var io = socket(server);
+
+// When connection made do something
+io.on('connection', (socket)=>{
+  console.log("Made socket connection");
 })
