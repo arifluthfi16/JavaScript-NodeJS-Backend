@@ -22,5 +22,16 @@ var io = socket(server);
 
 // When connection made do something
 io.on('connection', (socket)=>{
-  console.log("Made socket connection");
+  console.log("Made socket connection ",socket.id);
+
+  // Receive data from the client
+  socket.on("chat", function(data){
+    // get the data and resend to all client
+    io.sockets.emit('chat', data);
+  })
+
+  // Listening for for typing 
+  socket.on('typing',function(data){
+    socket.broadcast.emit('typing',data);
+  })
 })
