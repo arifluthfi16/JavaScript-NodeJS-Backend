@@ -19,8 +19,6 @@ class Node{
                 this.right.addNode(node);
             }
         }
-
-        
     }
 }
 
@@ -39,13 +37,67 @@ class Tree{
     }
 }
 
+function traversePreOrder(node){
+        if(node == null){
+            return;
+        }
+        console.log(node.val);
+        traversePreorder(node.left);
+        traversePreorder(node.right);
+}
+
+function traverseInOrder(node){
+    if(node == null){
+        return;
+    }
+
+    traverseInOrder(node.left);
+    console.log(node.val);
+    traverseInOrder(node.right);
+}
+
+function printDesc(node){
+    if(node == null){
+        return;
+    }
+
+    printDesc(node.right);
+    console.log(node.val);
+    printDesc(node.left);
+}
+
+function traversePostOrder(node){
+    if(node == null){
+        return;
+    }
+
+    traversePostOrder(node.left);
+    traversePostOrder(node.right);
+    console.log(node.val);
+}
+
+// Search Function
+function lookfor(n,node){
+    if(node == null){
+        return;
+    }
+    if(node.val == n){
+        return node;
+    }
+
+    if(node.val < n){
+        return lookfor(n,node.right);
+    }
+
+    return lookfor(n,node.left);
+}
+
 let binTree = new Tree();
-binTree.addNode(5);
-binTree.addNode(7);
-binTree.addNode(4);
-binTree.addNode(6);
-binTree.addNode(3);
-binTree.addNode(1);
-binTree.addNode(2);
+var root = binTree.root;
+
+for(let i = 1; i<10; i++){
+    binTree.addNode(Math.floor(Math.random(1,100)*100));
+}
 
 console.log(binTree);
+traverseInOrder(binTree.root);
