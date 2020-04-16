@@ -99,5 +99,16 @@ for(let i = 1; i<10; i++){
     binTree.addNode(Math.floor(Math.random(1,100)*100));
 }
 
+// BFS
+// Literally BFS is a Node Exploration Method
+// Wether we want to explore a path to a particular node 
+// Or maybe every node in general
+
+function bfs(n,startnode){
+
+}
+
+// DFS
+
 console.log(binTree);
 traverseInOrder(binTree.root);
