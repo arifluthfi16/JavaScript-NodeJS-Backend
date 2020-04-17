@@ -95,20 +95,49 @@ function lookfor(n,node){
 let binTree = new Tree();
 var root = binTree.root;
 
-for(let i = 1; i<10; i++){
-    binTree.addNode(Math.floor(Math.random(1,100)*100));
-}
+// for(let i = 1; i<10; i++){
+//     binTree.addNode(Math.floor(Math.random(1,100)*100));
+// }
+
+
+binTree.addNode(10);
+binTree.addNode(3);
+binTree.addNode(12);
+binTree.addNode(1);
+binTree.addNode(4);
+binTree.addNode(11);
+binTree.addNode(15);
+binTree.addNode(13);
 
 // BFS
 // Literally BFS is a Node Exploration Method
 // Wether we want to explore a path to a particular node 
 // Or maybe every node in general
+// Level Order Traversal
+function bfs(node){
+    if(node == null){
+        return;
+    }
 
-function bfs(n,startnode){
+    let queue = [node];
 
+    while(queue.length > 0){
+        let item = queue.shift()
+        let value = item.val;
+        console.log(value);
+
+        if(item.left == null & item.right == null){
+            continue;
+        }
+        if (item.left != null) {    
+            queue.push(item.left)
+        }
+        if (item.right != null) {
+        queue.push(item.right)
+        }
+
+    }
 }
 
 // DFS
-
-console.log(binTree);
 traverseInOrder(binTree.root);
