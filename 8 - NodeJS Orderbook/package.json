@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "avl": "^1.4.4",
     "websocket": "^1.0.31"
   }
 }

@@ -9,3 +9,4 @@ client.onopen = function () {
     // console.trace();
     client.send(`{"request":"inst_order_book","inst_id":1, "subscribe": true, "nonce":704114}`)
 }
+
