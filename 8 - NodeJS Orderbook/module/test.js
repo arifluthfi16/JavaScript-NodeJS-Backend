@@ -36,6 +36,16 @@ function generateBothRandomize(n){
     }
 }
 
+function generateBuyRandomize(n){
+    for(i=1; i<=n; i++){
+        createNewBuyOrder(
+                    Math.floor(Math.random() * (120-100)+100),  
+                    Math.floor(Math.random() * 100),
+                    123
+                );
+    }
+}
+
 function printAllBuyOrder(){
     console.log("\tOrder Price"+"\tAmount")
     buyOrder.forEach(function(node){
@@ -227,5 +237,6 @@ module.exports = {
     printAllBuyOrder,
     printAllSellOrder,
     generateBothRandomize,
-    printNoJoinAllWithID
+    printNoJoinAllWithID,
+    generateBuyRandomize
 }

@@ -70,7 +70,7 @@ function createNewSellOrder(price, amount, userID){
     }
 }
 
-// Remove a buy order
+// Remove a sell order
 function removeSellOrder(price){
     if(findSellPricePoint(price)){
         // If the node have more than 1 entry
@@ -85,12 +85,39 @@ function removeSellOrder(price){
     }
 }
 
-// Find Buy Order
+// Sell order find the closest price point
+
+function findSellLowestPrice(targetPrice){
+    let listPrice = sellOrder.keys();
+    let temp = targetPrice
+
+    if(temp < listPrice[0]){
+        return null;
+    }
+
+    for(let i=0;i < listPrice.length;i++){
+        if(listPrice[i] < temp){
+            temp = listPrice[i];
+        }
+    }
+    return temp;
+}
+
+// Find sell price point
 function findSellPricePoint(price){
     if(sellOrder.find(price)){
         return true;
     }
     return false;
+}
+
+// Return all as json 
+
+function getAllSellOrder(){
+    let queue = [];
+
+    console.log(sellOrder);
+    return sellOrder;
 }
 
 module.exports = {
@@ -100,6 +127,8 @@ module.exports = {
     findBuyPricePoint,
     createNewSellOrder,
     removeSellOrder,
+    findSellLowestPrice,
+    getAllSellOrder,
     buyOrder,
     sellOrder
 }
