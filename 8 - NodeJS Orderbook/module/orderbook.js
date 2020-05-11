@@ -48,6 +48,43 @@ function findBuyPricePoint(price){
     return false;
 }
 
+// Find Buy Lowest Price Point
+
+function findHighestBidderNoLimit(){
+    let listPrice = buyOrder.keys();
+
+    if(!listPrice[0]){
+        return null;
+    }
+
+    let temp = listPrice[0];
+
+    for(let i=0;i < listPrice.length;i++){
+        if(listPrice[i] > temp){
+            temp = listPrice[i];
+        }
+    }
+    return temp;
+}
+
+function findHighestBidder(targetPrice){
+    let listPrice = buyOrder.keys();
+    let len = listPrice.length;
+    let temp = targetPrice
+
+    console.log(listPrice[len-1])
+    if(temp > listPrice[len-1]){
+        return null;
+    }
+
+    for(let i=len-1;i >0;i--){
+        if(listPrice[i] > temp){
+            temp = listPrice[i];
+        }
+    }
+    return temp;
+}
+
 //// SELL ORDER COMMANDS //
 
 function createNewSellOrder(price, amount, userID){
@@ -103,6 +140,23 @@ function findSellLowestPrice(targetPrice){
     return temp;
 }
 
+function findSellLowerPriceNoLimit(){
+    let listPrice = sellOrder.keys();
+
+    if(!listPrice[0]){
+        return null;
+    }
+
+    let temp = listPrice[0];
+
+    for(let i=0;i < listPrice.length;i++){
+        if(listPrice[i] < temp){
+            temp = listPrice[i];
+        }
+    }
+    return temp;
+}
+
 // Find sell price point
 function findSellPricePoint(price){
     if(sellOrder.find(price)){
@@ -129,6 +183,9 @@ module.exports = {
     removeSellOrder,
     findSellLowestPrice,
     getAllSellOrder,
+    findSellLowerPriceNoLimit,
+    findHighestBidderNoLimit,
+    findHighestBidder,
     buyOrder,
     sellOrder
 }
