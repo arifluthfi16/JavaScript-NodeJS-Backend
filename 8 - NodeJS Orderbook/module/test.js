@@ -194,7 +194,9 @@ function printNoJoinAllWithID(){
         // Use buy str as the base
         for(let i=0; i<buyStr.length;i++){
             if(sellStr[i]){
-                comb.push(buyStr[i]+sellStr[i])
+               
+                    comb.push(buyStr[i]+sellStr[i])
+                
             }else{
                 comb.push(buyStr[i])
             }
@@ -205,7 +207,7 @@ function printNoJoinAllWithID(){
             if(buyStr[i]){
                 comb.push(buyStr[i]+sellStr[i])
             }else{
-                comb.push("\t\t"+sellStr[i])
+                comb.push("\t\t\t"+sellStr[i])
             }
         }
     }

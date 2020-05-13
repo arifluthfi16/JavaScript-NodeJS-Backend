@@ -72,7 +72,6 @@ function findHighestBidder(targetPrice){
     let len = listPrice.length;
     let temp = targetPrice
 
-    console.log(listPrice[len-1])
     if(temp > listPrice[len-1]){
         return null;
     }
