@@ -125,6 +125,11 @@ function removeSellOrder(price){
 
 function findSellLowestPrice(targetPrice){
     let listPrice = sellOrder.keys();
+
+    if(listPrice.length <= 0 ){
+        return null;
+    }
+
     let temp = targetPrice
 
     if(temp < listPrice[0]){

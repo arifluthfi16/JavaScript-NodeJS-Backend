@@ -9,6 +9,8 @@ const {
     sellOrder
 } = require('./orderbook');
 
+const lim = require('./limitengine');
+
 //// TESTING ////
 function testDuplicateOrder(){
     // Testing with duplicate price
@@ -42,6 +44,15 @@ function generateBuyRandomize(n){
                     Math.floor(Math.random() * (120-100)+100),  
                     Math.floor(Math.random() * 100),
                     123
+                );
+    }
+}
+
+function generateLimitBuy(n){
+    for(i=1; i<=n; i++){
+        lim.limitBuy(
+                    Math.floor(Math.random() * (120-100)+100),  
+                    Math.floor(Math.random() * 100)
                 );
     }
 }
@@ -240,5 +251,6 @@ module.exports = {
     printAllSellOrder,
     generateBothRandomize,
     printNoJoinAllWithID,
-    generateBuyRandomize
+    generateBuyRandomize,
+    generateLimitBuy
 }
