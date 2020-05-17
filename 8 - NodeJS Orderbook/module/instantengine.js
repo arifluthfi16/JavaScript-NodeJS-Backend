@@ -3,11 +3,15 @@ const {buyOrder, sellOrder,findSellPricePoint, findSellLowestPrice,
     findBuyPricePoint} = require('./orderbook');
 const tester = require('./test');
 
+const comodity = require('./comodity');
+
 
 // Buy something which mean will look values in Sell Order
 // Because we 'buy' from people 'selling' the product
 
 async function instantBuy(amount){
+    comodity.addValue(amount);
+
     let buyStatement = [];
     let instantBuyOrder = {
         amount
@@ -62,8 +66,16 @@ async function instantBuy(amount){
             console.log("Instant Order Amount Left : "+instantBuyOrder.amount)
 
         // Delete Tree Node if there is no data anymore
-        if(sellOrder.find(priceFlag).data.length <= 0){
-            sellOrder.remove(priceFlag)
+        try{
+            if(sellOrder.find(priceFlag)){
+                if(sellOrder.find(priceFlag).data.length <= 0){
+                    console.log("PRICE FLAG DELETED : "+priceFlag);
+                    sellOrder.remove(priceFlag)
+                }
+            }
+        }catch(e){
+            console.log("failed to delete : "+priceFlag)
+            console.log()
         }
 
         priceFlag = findSellLowerPriceNoLimit()
@@ -81,6 +93,8 @@ async function instantBuy(amount){
 // Sell something which mean look values in the buy order book
 // So we 'sell' product to people who are buying
 async function instantSell(amount){
+    comodity.decValue(amount);
+
     let sellStatement = [];
     let instantSellOrder = {
         amount
@@ -135,9 +149,19 @@ async function instantSell(amount){
             console.log("Instant Order Amount Left : "+instantSellOrder.amount)
 
         // Delete Tree Node if there is no data anymore
-        if(buyOrder.find(priceFlag).data.length <= 0){
-            buyOrder.remove(priceFlag)
+        try{
+            if(buyOrder.find(priceFlag)){
+                if(buyOrder.find(priceFlag).data.length <= 0){
+                    console.log("PRICE FLAG DELETED : "+priceFlag);
+                    buyOrder.remove(priceFlag)
+                }
+            }
+        }catch(e){
+            console.log("failed to delete : "+priceFlag)
+            console.log()
         }
+
+        
 
         priceFlag = findHighestBidderNoLimit()
     }

@@ -1,7 +1,15 @@
 var AVLTree = require('avl');
 
 var buyOrder = new AVLTree();
-var sellOrder = new AVLTree(); 
+var sellOrder = new AVLTree();
+var stopLimitOrderQueue = {
+    sell : [],
+    buy : []
+};
+var stopMarketOrderQueue = {
+    sell : [],
+    buy : []
+};;
 
 //// BUY ORDER COMMANDS ////
 
@@ -70,13 +78,18 @@ function findHighestBidderNoLimit(){
 function findHighestBidder(targetPrice){
     let listPrice = buyOrder.keys();
     let len = listPrice.length;
+
+    if(len <= 0){
+        return null;
+    }
+
     let temp = targetPrice
 
     if(temp > listPrice[len-1]){
         return null;
     }
 
-    for(let i=len-1;i >0;i--){
+    for(let i=len-1;i>=0;i--){
         if(listPrice[i] > temp){
             temp = listPrice[i];
         }
@@ -191,5 +204,7 @@ module.exports = {
     findHighestBidderNoLimit,
     findHighestBidder,
     buyOrder,
-    sellOrder
+    sellOrder,
+    stopMarketOrderQueue,
+    stopLimitOrderQueue
 }

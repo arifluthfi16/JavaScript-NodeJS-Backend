@@ -1,4 +1,4 @@
-const {btc} = require('./comodity');
+const comodity = require('./comodity');
 const { 
     buyOrder, sellOrder,
     findSellPricePoint, 
@@ -10,3 +10,10 @@ const {
 } = require('./orderbook');
 const tester = require('./test');
 
+function stopLimitBuy(){
+    
+}
+
+function stopLimitSell(){
+
+}

@@ -1,17 +1,15 @@
 const orderbook = require("./orderbook");
 const tester    = require("./test");
 const instant   = require("./instantengine");
-const limit     = require("./limitengine");
+const lim       = require("./limitengine");
 const pr        = require('./processor');
+const comodity  = require('./comodity');
 
-tester.lb();
-tester.generateLimitBuy(5);
-// orderbook.createNewSellOrder(95,10,123);
-// orderbook.createNewSellOrder(90,5,123);
-// orderbook.createNewSellOrder(91,5,123);
-// orderbook.createNewSellOrder(92,5,123);
-// orderbook.createNewSellOrder(90,5,123);
-// orderbook.createNewSellOrder(93,79,123);
+lim.limitBuy(150,20);
+lim.limitBuy(150,20);
+lim.limitBuy(150,20);
+lim.limitBuy(150,20);
+lim.limitSell(140,30);
+
 tester.printNoJoinAllWithID();
-
-// limit.limitSell(115,200);
+console.log("Comodity Price : "+comodity.getPrice());

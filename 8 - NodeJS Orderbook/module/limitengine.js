@@ -7,13 +7,18 @@ const {
         createNewSellOrder,
         createNewBuyOrder,
     } = require('./orderbook');
+
 const tester = require('./test');
 
+const comodity = require('./comodity');
 
 // Buy something which mean will look values in Sell Order
 // Because we 'buy' from people 'selling' the product
 
 async function limitBuy(price, amount){
+
+    comodity.addValue(amount);
+
     let buyStatement = [];
     let limitBuyOrder = {
         price,
@@ -68,8 +73,16 @@ async function limitBuy(price, amount){
             console.log("Instant Order Amount Left : "+limitBuyOrder.amount)
 
         // Delete Tree Node if there is no data anymore
-        if(sellOrder.find(priceFlag).data.length <= 0){
-            sellOrder.remove(priceFlag)
+        try{
+            if(sellOrder.find(priceFlag)){
+                if(sellOrder.find(priceFlag).data.length <= 0){
+                    console.log("PRICE FLAG DELETED : "+priceFlag);
+                    sellOrder.remove(priceFlag)
+                }
+            }
+        }catch(e){
+            console.log("failed to delete : "+priceFlag)
+            console.log()
         }
 
         priceFlag = findSellLowestPrice(limitBuyOrder.price)
@@ -80,11 +93,16 @@ async function limitBuy(price, amount){
 
     }
 
-    console.log();
-    console.log("The Order Statment ")
-    console.log(buyStatement);
-    tester.lb()
-    tester.printNoJoinAllWithID();
+    if(buyStatement.length > 0){
+        // Create partial order stetment
+        console.log("The Order Statment")
+        console.log(buyStatement);
+        console.log();
+    }else{
+        console.log("Order failed to fill, new buy order created");
+        console.log();
+    }
+    
 
 }
 
@@ -92,6 +110,9 @@ async function limitBuy(price, amount){
 // Sell something which mean look values in the buy order book
 // So we 'sell' product to people who are buying
 async function limitSell(price, amount){
+
+    comodity.decValue(amount);
+
     let sellStatement = [];
     let limitSellOrder = {
         price,
@@ -104,7 +125,6 @@ async function limitSell(price, amount){
 
     // Check if it is lowest price
     let priceFlag = findHighestBidder(limitSellOrder.price);
-    console.log(priceFlag);
     while(limitSellOrder.amount > 0 && priceFlag !== null){
         if(priceFlag === null){
             break;
@@ -143,12 +163,21 @@ async function limitSell(price, amount){
                 }
             });
     
-            console.log()
-            console.log("Instant Order Amount Left : "+limitSellOrder.amount)
+            // console.log()
+            // console.log("Instant Order Amount Left : "+limitSellOrder.amount)
 
         // Delete Tree Node if there is no data anymore
-        if(buyOrder.find(priceFlag).data.length <= 0){
-            buyOrder.remove(priceFlag)
+        
+        try{
+            if(buyOrder.find(priceFlag)){
+                if(buyOrder.find(priceFlag).data.length <= 0){
+                    console.log("PRICE FLAG DELETED : "+priceFlag);
+                    buyOrder.remove(priceFlag)
+                }
+            }
+        }catch(e){
+            console.log("failed to delete : "+priceFlag)
+            console.log()
         }
 
         priceFlag = findHighestBidder(limitSellOrder.price)
@@ -160,11 +189,15 @@ async function limitSell(price, amount){
 
     }
 
-    console.log();
-    console.log("The Order Statment ")
-    console.log(sellStatement);
-    tester.lb()
-    tester.printNoJoinAllWithID();
+    if(sellStatement.length > 0){
+        // Create partial order stetment
+        console.log("The Order Statment")
+        console.log(sellStatement);
+        console.log();
+    }else{
+        console.log("Order failed to fill, new sell order created");
+        console.log();
+    }
 
 }
 

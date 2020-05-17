@@ -48,14 +48,33 @@ function generateBuyRandomize(n){
     }
 }
 
-function generateLimitBuy(n){
-    for(i=1; i<=n; i++){
+async function generateLimitBuy(n){
+    var i = 1;
+    let interval = setInterval(()=>{
         lim.limitBuy(
-                    Math.floor(Math.random() * (120-100)+100),  
-                    Math.floor(Math.random() * 100)
-                );
-    }
+            Math.floor(Math.random() * (120-100)+100),  
+            Math.floor(Math.random() * 100)
+        );
+        console.log(i)
+        if(i++ >= 5){
+            clearInterval(interval);
+        }
+    }, 200)
 }
+
+async function generateLimitSell(n){
+    var j = 1;
+    let interval = setInterval(()=>{
+        lim.limitSell(
+            Math.floor(Math.random() * (120-100)+100),  
+            Math.floor(Math.random() * 100)
+        );
+        if(j++ >= n){
+            clearInterval(interval);
+        }
+    }, 200)
+}
+
 
 function printAllBuyOrder(){
     console.log("\tOrder Price"+"\tAmount")
@@ -186,20 +205,28 @@ function printNoJoinAllWithID(){
     let comb = [];
     let buyJoin = [];
     let sellJoin = [];
+    let buyLen = buyOrder.keys().length;
+    let sellLen = sellOrder.keys().length;
+    
 
-    buyOrder.forEach(function(node){
-        node.data.forEach(function(data){
-            buyStr.push("\t"+data.price+"\t"+data.amount+"\t"+data.orderId);
+    if(!buyLen <= 0){
+        buyOrder.forEach(function(node){
+            node.data.forEach(function(data){
+                buyStr.push("\t"+data.price+"\t"+data.amount+"\t"+data.orderId);
+            })
         })
-    })
 
-    buyStr = buyStr.reverse();
+        buyStr = buyStr.reverse();
+    }
 
-    sellOrder.forEach(function(node){
-        node.data.forEach(function(data){
-            sellStr.push("\t\t"+data.price+"\t"+data.amount+"\t"+data.orderId);
+    if(!sellLen <= 0){
+        sellOrder.forEach(function(node){
+            node.data.forEach(function(data){
+                sellStr.push("\t\t"+data.price+"\t"+data.amount+"\t"+data.orderId);
+            })
         })
-    })
+    }
+    
 
     if(buyStr.length >= sellStr.length){
         // Use buy str as the base
@@ -241,6 +268,12 @@ function lb(){
     console.log();
 }
 
+function testLib(){
+    console.log("Library tester is connected");
+}
+
+const version = 1;
+
 module.exports = {
     testDuplicateOrder,
     testRemoval,
@@ -252,5 +285,8 @@ module.exports = {
     generateBothRandomize,
     printNoJoinAllWithID,
     generateBuyRandomize,
-    generateLimitBuy
+    generateLimitBuy,
+    generateLimitSell,
+    testLib,
+    version
 }
