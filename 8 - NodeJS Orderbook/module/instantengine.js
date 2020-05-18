@@ -1,17 +1,15 @@
 const {buyOrder, sellOrder,findSellPricePoint, findSellLowestPrice,
     findSellLowerPriceNoLimit,findHighestBidderNoLimit,
     findBuyPricePoint} = require('./orderbook');
-const tester = require('./test');
 
 const comodity = require('./comodity');
+const proc     = require('./processor');
 
 
 // Buy something which mean will look values in Sell Order
 // Because we 'buy' from people 'selling' the product
 
 async function instantBuy(amount){
-    comodity.addValue(amount);
-
     let buyStatement = [];
     let instantBuyOrder = {
         amount
@@ -36,7 +34,7 @@ async function instantBuy(amount){
 
                 if(instantBuyOrder.amount > 0){
                     // Fill whole order and break;
-                    if(item.amount >= instantBuyOrder.amount){
+                    if(parseInt(item.amount) >= parseInt(instantBuyOrder.amount)){
                         let itemToPush = {...item};
                         item.amount = item.amount - instantBuyOrder.amount;
                         itemToPush.amount = instantBuyOrder.amount
@@ -84,8 +82,9 @@ async function instantBuy(amount){
     console.log();
     console.log("The Order Statment ")
     console.log(buyStatement);
-    tester.lb()
-    tester.printNoJoinAllWithID();
+
+    comodity.addValue(amount);
+    proc.scanStopOrder(comodity.getPrice());
 
     }
 
@@ -93,7 +92,6 @@ async function instantBuy(amount){
 // Sell something which mean look values in the buy order book
 // So we 'sell' product to people who are buying
 async function instantSell(amount){
-    comodity.decValue(amount);
 
     let sellStatement = [];
     let instantSellOrder = {
@@ -119,7 +117,7 @@ async function instantSell(amount){
 
                 if(instantSellOrder.amount > 0){
                     // Fill whole order and break;
-                    if(item.amount >= instantSellOrder.amount){
+                    if(parseInt(item.amount) >= parseInt(instantSellOrder.amount)){
                         let itemToPush = {...item};
                         item.amount = item.amount - instantSellOrder.amount;
                         itemToPush.amount = instantSellOrder.amount
@@ -169,8 +167,9 @@ async function instantSell(amount){
     console.log();
     console.log("The Order Statment ")
     console.log(sellStatement);
-    tester.lb()
-    tester.printNoJoinAllWithID();
+
+    comodity.decValue(amount);
+    proc.scanStopOrder(comodity.getPrice());
 
     }
 

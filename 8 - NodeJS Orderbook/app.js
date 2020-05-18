@@ -1,34 +1,26 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+const bodyParser     =  require("body-parser");
+
+// Port Setting
 const port = 3000;
-var bodyParser     =  require("body-parser");
-const orderbook = require('./module/orderbook');
+
+// Import Router
+const limitRouter = require('./routes/limit');
+const marketRouter = require('./routes/market');
+const comodityRouter = require('./routes/comodity');
+const stopMarketRouter = require('./routes/stopmarket');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send("Gracias"));
-
-app.post('/sellorder', (req, res) => {
-    let order = req.body;
-
-    orderbook.createNewSellOrder(order.price,order.amount,123);
-    res.send({
-        msg : "Succeed creating new sell order",
-        order : {
-            price: order.price,
-            amount : order.amount
-        }
-    });
-});
-
-app.get('/sellorder', (req,res)=>{
-    res.send({
-        msg : "Succeed retrieve all sell order",
-        status : 200,
-        order : orderbook.getAllSellOrder()
-        
-    });
-});
+// Use Imported Router
+app.use('/limit',limitRouter);
+app.use('/market',marketRouter);
+app.use('/comodity', comodityRouter);
+app.use('/stopmarket', stopMarketRouter);
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
+
+
+module.exports = app;

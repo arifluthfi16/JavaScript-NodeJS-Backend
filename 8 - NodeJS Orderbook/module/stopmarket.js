@@ -9,7 +9,6 @@ const {
     createNewBuyOrder,
     stopMarketOrderQueue
 } = require('./orderbook');
-const tester = require('./test');
 const instant = require('./instantengine');
 
 function stopMarketBuy(price,amount){
@@ -22,14 +21,15 @@ function stopMarketBuy(price,amount){
     // If the current price fit the stop order
     // Immediately fill the order
     if(comodity.getPrice() <= price) {
-        instant.instantBuy(buyOrder.price,buyOrder.amount)
+        instant.instantBuy(buyOrder.amount)
     }else{ 
         // Push the order to market queue
+        console.log("Pushed buy order queue");
         stopMarketOrderQueue.buy.push((buyOrder));
     }
 }
 
-function stopMarketSell(){
+function stopMarketSell(price,amount){
     let sellOrder = {
         price,
         amount
@@ -41,6 +41,7 @@ function stopMarketSell(){
         instant.instantSell(buyOrder.price,buyOrder.amount)
     }else{ 
         // Push the order to market queue
+        console.log("Pushed sell order queue");
         stopMarketOrderQueue.sell.push((sellOrder));
     }
 }

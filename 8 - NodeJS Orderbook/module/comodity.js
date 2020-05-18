@@ -1,5 +1,4 @@
 // Comodity Class
-
 const btc = {
     name : 'Bitcoin',
     price : 100,
@@ -29,12 +28,6 @@ function decValue(amount){
 
 function getPrice(){
     return btc.price;
-}
-
-function scanStopOrder(){
-    // Scan for market instant buy
-
-    // Scan for market instant sell
 }
 
 module.exports = {

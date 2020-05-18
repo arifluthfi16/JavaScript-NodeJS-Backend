@@ -191,6 +191,43 @@ function getAllSellOrder(){
     return sellOrder;
 }
 
+// Return 
+
+function returnBuyOrder(){
+    let priceList = buyOrder.keys();
+    let temp = []
+
+    for(let i=0; i<priceList.length; i++){
+        let builder = {
+            price : priceList[i],
+            data : buyOrder.find(priceList[i]).data
+        }
+
+        temp.push(builder);
+    }
+
+    temp = temp.reverse();
+    return temp;
+}
+
+function returnSellOrder(){
+    let priceList = sellOrder.keys();
+    var temp = []
+
+    for(let i=0; i<priceList.length; i++){
+        let builder = {
+            price : priceList[i],
+            data : sellOrder.find(priceList[i]).data
+        }
+
+        temp.push(builder);
+    }
+
+    temp.priceList = priceList;
+
+    return temp;
+}
+
 module.exports = {
     createNewBuyOrder,
     removeBuyOrder,
@@ -206,5 +243,7 @@ module.exports = {
     buyOrder,
     sellOrder,
     stopMarketOrderQueue,
-    stopLimitOrderQueue
+    stopLimitOrderQueue,
+    returnBuyOrder,
+    returnSellOrder
 }
