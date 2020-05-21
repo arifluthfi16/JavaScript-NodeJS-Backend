@@ -10,6 +10,7 @@ const limitRouter = require('./routes/limit');
 const marketRouter = require('./routes/market');
 const comodityRouter = require('./routes/comodity');
 const stopMarketRouter = require('./routes/stopmarket');
+const stopLimitRouter = require('./routes/stoplimit');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,6 +20,7 @@ app.use('/limit',limitRouter);
 app.use('/market',marketRouter);
 app.use('/comodity', comodityRouter);
 app.use('/stopmarket', stopMarketRouter);
+app.use('/stoplimit', stopLimitRouter);
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
 

@@ -9,6 +9,7 @@ const {
     createNewBuyOrder,
     stopMarketOrderQueue
 } = require('./orderbook');
+
 const instant = require('./instantengine');
 
 function stopMarketBuy(price,amount){

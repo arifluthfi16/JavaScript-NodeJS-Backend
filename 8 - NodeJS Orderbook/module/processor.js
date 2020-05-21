@@ -2,6 +2,7 @@
 const orderbook = require('./orderbook');
 const {sellOrder,buyOrder} = orderbook;
 const comodity = require('./comodity');
+const limutil = require('./util/limitutil');
 console.log("Comodities : ");
 console.log(comodity);
 
@@ -11,16 +12,15 @@ function scanStopOrder(comodityPrice){
     console.log(orderbook.stopMarketOrderQueue);
 
     if(orderbook.stopMarketOrderQueue.buy.length > 0){
-
         // Filter Array
         orderbook.stopMarketOrderQueue.buy = orderbook.stopMarketOrderQueue.buy.filter(function(item){
             // console.log("FILTERING")
             if(comodityPrice <= item.price){
                 console.log("Executed Buy Stop Order")
                 instantBuy(item.amount);
-            }else{
-                return item > comodityPrice;
             }
+           return item > comodityPrice;
+            
         })
     }
     // Scan for market instant sell
@@ -32,12 +32,47 @@ function scanStopOrder(comodityPrice){
             if(comodityPrice >= item.price){
                 console.log("Executed Sell Stop Order")
                 instantSell(item.amount);
-            }else{
-                return item > comodityPrice;
             }
+           return item > comodityPrice;
+            
         })
     }
-    //reset
+    
+    console.log("Stop Limit Order Queue : ");
+    console.log(orderbook.stopLimitOrderQueue.buy);
+    // Scan for stop limit buy
+    if(orderbook.stopLimitOrderQueue.buy.length > 0){
+        // Filter Array
+        orderbook.stopLimitOrderQueue.buy = orderbook.stopLimitOrderQueue.buy.filter(function(item){
+            // console.log("FILTERING")
+            console.log(comodityPrice)
+            console.log(item.stopPrice);
+            if(comodityPrice <= item.stopPrice){
+                console.log("Executed Buy Stop Order")
+                limutil.limitBuy(item.limitPrice, item.amount);
+            }
+            return item > comodityPrice;
+        
+        })
+    }
+
+    //testset
+
+    // Scan for stop limit sell
+    if(orderbook.stopLimitOrderQueue.sell.length > 0){
+        // Filter Array
+        console.log("FILTERING SELL ORDER")
+        orderbook.stopLimitOrderQueue.sell = orderbook.stopLimitOrderQueue.buy.filter(function(item){
+            console.log("FILTERING SELL ORDER")
+            if(comodityPrice >= item.stopPrice){
+                console.log("Executed Sell Stop Order")
+                limutil.limitSell(item.limitPrice, item.amount);
+            }
+           return item > comodityPrice;
+            
+        })
+    }
+    
 }
 
 async function instantBuy(amount){
