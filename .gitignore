@@ -46,6 +46,7 @@ node_modules/
 5 - Mongoose with Express and Redis Caching/node_modules/
 6 - Websocket/node_modules/
 8 - NodeJS Orderbook/node_modules/
+9 - Testing with Mocha/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
