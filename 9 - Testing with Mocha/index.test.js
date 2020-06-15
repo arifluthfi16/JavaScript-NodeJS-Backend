@@ -5,7 +5,8 @@ _ = require('lodash');
 
 const {
     alwaysTrue,
-    legitString
+    legitString,
+    getPerson
 } = require('./index');
 
 describe('#mocha basics', ()=>{
@@ -37,8 +38,7 @@ describe("#alwaysTrue", ()=>{
     })
 })
 
-
-
+// Basic String Test
 describe("#legitString", ()=>{
     it("should detect 'cow' as a legit string ",()=>{
         legitString('cow').should.be.true;
@@ -47,6 +47,21 @@ describe("#legitString", ()=>{
     // Negative test
     it("undefined should not be true", ()=>{
         legitString(undefined).should.be.false;
+    })
+});
+
+// Confirm initial condition
+describe.only("#index initial condition ", ()=>{
+    it("Initial person is an object", ()=>{
+        const person = getPerson();
+
+        _.isObject(person).should.be.true;
+    })
+
+    it("armor bonus by default is 0 with wearing leather armor", ()=>{
+        const person = getPerson();
+        person.armorBonus.should.equal(0);
+        // FIXME : Should be 2 by deafult using leather armor
     })
 });
 
