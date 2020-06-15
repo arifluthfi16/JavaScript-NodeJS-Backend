@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Whats ur name</h1>
+        <form action="?" id="subscribeForm" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="form-control">
+            </div>
+    
+            <div class="g-recaptcha"            data-sitekey="6LfxBqUZAAAAAGnu-uPig6CUQnDjHXBVXnLH00a8"></div>
+            <br/>
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+    </div>
+    <script>
+        document.getElementById("subscribeForm").addEventListener('submit',submitForm);
+
+        function submitForm(e){
+            e.preventDefault();
+            
+            const name = document.querySelector('#name').value;
+            const captcha = document.querySelector('#g-recaptcha-response').value; 
+
+            fetch('/subscribe', {
+                method: 'POST',
+                headers : {
+                    'Accept' : 'application/json, text/plain, */*',
+                    'Content-type' : 'application/json'
+                },
+                body : JSON.stringify({name, captcha})
+            })
+            .then((res)=> res.json())
+            .then((data)=>{
+                console.log("DATA IS IN : ",data);
+                alert(data)
+            })
+        }
+    </script>
+</body>
+</html>
