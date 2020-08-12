@@ -1,0 +1,1 @@
+pg_dump --file "E:\\Project\\Focus\\API-Marketkoin2.0\\database\\dbx.sql" --host "localhost" --port "5432" --username "postgres" --password=root --format=p --schema-only "marketkoin2"

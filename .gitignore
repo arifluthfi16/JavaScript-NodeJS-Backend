@@ -39,14 +39,7 @@ build/Release
 
 # Dependency directories
 node_modules/
-1 - Simple POST & GET Request/node_modules/
-2 - Uploading Image with Filters/node_modules/
-3 - Mongoose with Express/node_modules/
-4 - Express with Redis Caching/node_modules/
-5 - Mongoose with Express and Redis Caching/node_modules/
-6 - Websocket/node_modules/
-8 - NodeJS Orderbook/node_modules/
-9 - Testing with Mocha/node_modules/
+**/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
